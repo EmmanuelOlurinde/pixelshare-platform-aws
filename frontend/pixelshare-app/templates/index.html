@@ -1,47 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Photo Feed</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>PixelShare</title>
     <style>
-        body {
-            font-family: Arial;
-            background: #fafafa;
-            text-align: center;
-        }
-        .upload-box {
-            margin: 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 200px);
-            gap: 15px;
-            justify-content: center;
-        }
-        img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { text-align: center; }
+        form { margin-bottom: 30px; text-align: center; }
+        .gallery { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+        .image-card { border: 1px solid #ddd; padding: 8px; border-radius: 6px; }
+        .image-card img { max-width: 250px; height: auto; display: block; }
     </style>
 </head>
 <body>
+    <h1>PixelShare</h1>
 
-<h1>📸 Pixelshare App</h1>
-
-<div class="upload-box">
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="photo" required>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo" accept="image/*" required>
         <button type="submit">Upload</button>
     </form>
-</div>
 
-<div class="grid">
-    {% for image in images %}
-        <img src="/uploads/{{ image }}">
-    {% endfor %}
-</div>
-
+    <div class="gallery">
+        {% for image in images %}
+            <div class="image-card">
+                <a href="{{ url_for('image', filename=image) }}" target="_blank">
+                    <img src="{{ url_for('image', filename=image) }}" alt="{{ image }}">
+                </a>
+                <p>{{ image }}</p>
+            </div>
+        {% else %}
+            <p>No images uploaded yet.</p>
+        {% endfor %}
+    </div>
 </body>
 </html>
