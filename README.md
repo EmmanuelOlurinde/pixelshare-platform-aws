@@ -1,4 +1,4 @@
-# PixelShare 
+# PixelShare Platform (AWS Cloud Infrastructure)
 
 A cloud-native photo-sharing platform deployed on a fully automated AWS 3-tier architecture.
 
